@@ -1,14 +1,12 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
-nav: true
-nav_order: 1
 subtitle: Master's student in Computer Vision (MSCV) · Robotics Institute · Carnegie Mellon University
 
 profile:
   align: right
-  image: kmurungi.jpeg
+  # image: kmurungi.jpeg
   image_circular: True # crops the image to make it circular
   more_info: >
 
@@ -26,9 +24,10 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I’m a Master’s student in Computer Vision (MSCV) at Carnegie Mellon University’s Robotics Institute, focusing on real-time 3D perception, GPU systems acceleration, and spatial AI.
+I’m a Master’s student in Computer Vision (MSCV) at Carnegie Mellon University’s Robotics Institute. My interests are spatial AI and 3D scene understanding: how machines perceive, index, and reason about physical environments.
 
-Below are a few of my recent systems and research builds—ranging from bare-metal C++/CUDA 3D Gaussian Splatting kernels to render-free 3D scene–language retrieval.
+Below are recent projects on spatial scene understanding—native 3D representations, open-vocabulary retrieval, and grounding language models on 3D evidence.
+
 
 <div class="mt-4" style="display:flex;flex-direction:column;gap:1.25rem;">
 {% assign sorted_projects = site.projects | sort: "importance" %}

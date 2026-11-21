@@ -1,8 +1,8 @@
 ---
 layout: page
-title: projects
+title: Projects
 permalink: /projects/
-description: Systems and research builds spanning 3D perception, CUDA, and spatial AI.
+description: Spatial AI and 3D scene understanding — native representations, open-vocabulary retrieval, and language grounded on 3D evidence.
 nav: true
 nav_order: 2
 ---
