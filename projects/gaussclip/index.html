@@ -1,0 +1,91 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> GaussCLIP | Koome Murungi </title> <meta name="author" content="Koome Murungi"> <meta name="description" content="Searchable native 3D Gaussian chunks → grounded QA from a frozen LLM and retrieved caption evidence (no VLM fine-tuning)."> <meta name="keywords" content="computer-vision, 3dgs, cuda, spatial-ai, robotics, portfolio"> <meta property="og:site_name" content="Koome Murungi"> <meta property="og:type" content="website"> <meta property="og:title" content="Koome Murungi | GaussCLIP"> <meta property="og:url" content="https://kmurungi.github.io/projects/gaussclip/"> <meta property="og:description" content="Searchable native 3D Gaussian chunks → grounded QA from a frozen LLM and retrieved caption evidence (no VLM fine-tuning)."> <meta property="og:locale" content="en"> <meta name="twitter:card" content="summary"> <meta name="twitter:title" content="GaussCLIP"> <meta name="twitter:description" content="Searchable native 3D Gaussian chunks → grounded QA from a frozen LLM and retrieved caption evidence (no VLM fine-tuning)."> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://kmurungi.github.io/projects/gaussclip/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Koome</span> Murungi </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">About </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">Projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">GaussCLIP</h1> <p class="post-description">Searchable native 3D Gaussian chunks → grounded QA from a frozen LLM and retrieved caption evidence (no VLM fine-tuning).</p> </header> <article> <h2 id="overview">Overview</h2> <p>GaussCLIP indexes a 3D Gaussian Splat scene as <strong>searchable native chunks</strong>. A text question retrieves the relevant regions; a <strong>frozen instruct LLM</strong> answers from the retrieved caption evidence—or abstains when that evidence is withheld. There is <strong>no VLM fine-tuning</strong> and no baking language into every splat. Demos and metrics use <strong>Replica MCMC</strong> indoor 3DGS scenes from SceneSplat-7K / GaussianWorld.</p> <p class="text-muted mb-3"><strong>Scene:</strong> <code>frl_apartment_0</code> (Replica)</p> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/gaussclip/qa-bicycle-480.webp 480w,/assets/img/gaussclip/qa-bicycle-800.webp 800w,/assets/img/gaussclip/qa-bicycle-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/gaussclip/qa-bicycle.png" class="img-fluid rounded z-depth-1 mb-4" width="100%" height="auto" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <p><strong>Q:</strong> <em>Is there a bicycle near the stairs?</em></p> <p><strong>Evidence (top retrieved captions):</strong></p> <ul> <li> <em>Bicycle near stairs:</em> blue bicycle parked near the wooden stairs on the light wood flooring.</li> <li> <em>Plant and stairs area:</em> potted plant near stairs and wood-paneled walls in living space.</li> </ul> <p><strong>With retrieval:</strong> <strong>Yes</strong> — blue bicycle parked near the wooden stairs on the light wood flooring.</p> <p><strong>Without retrieval:</strong> Abstains — not certain from evidence whether a bicycle is near the stairs.</p> <div class="row mt-4"> <div class="col-sm-6 mb-3"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/gaussclip/qa-vase-480.webp 480w,/assets/img/gaussclip/qa-vase-800.webp 800w,/assets/img/gaussclip/qa-vase-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/gaussclip/qa-vase.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> <em>What is on the wooden table?</em> — with retrieval: two blue lamps; without: abstains. </div> </div> <div class="col-sm-6 mb-3"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/gaussclip/qa-plant-480.webp 480w,/assets/img/gaussclip/qa-plant-800.webp 800w,/assets/img/gaussclip/qa-plant-1400.webp 1400w," type="image/webp" sizes="95vw"></source> <img src="/assets/img/gaussclip/qa-plant.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" loading="lazy" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </picture> </figure> <div class="caption"> <em>Where are the potted plants?</em> — with retrieval: stairwell, bottom near the white door; without: abstains. </div> </div> </div> <h2 id="results">Results</h2> <p>Chunk ↔ text retrieval on held-out Replica MCMC chunks (<strong>N = 507</strong>; chance R@1 = 1/507 ≈ <strong>0.2%</strong>):</p> <table> <thead> <tr> <th>Pool</th> <th style="text-align: right">N</th> <th style="text-align: right">R@1</th> <th style="text-align: right">R@3</th> <th style="text-align: right">Chance R@1</th> </tr> </thead> <tbody> <tr> <td>Full validation</td> <td style="text-align: right">507</td> <td style="text-align: right">~5–6%</td> <td style="text-align: right">~13%</td> <td style="text-align: right">~0.2%</td> </tr> <tr> <td>Small qualitative pool</td> <td style="text-align: right">~56</td> <td style="text-align: right">~23–25%</td> <td style="text-align: right">higher</td> <td style="text-align: right">~2%</td> </tr> </tbody> </table> <p>On held-out <strong>Replica MCMC</strong> chunks, R@1 and R@3 sit clearly above chance. When the right caption reaches the evidence pack, the frozen LLM answers spatial questions it otherwise refuses.</p> <h2 id="notes">Notes</h2> <ul> <li>Wrong top‑k retrieval can still yield confident wrong answers (text evidence only today).</li> <li> <strong>Next:</strong> add gsplat <strong>crops</strong> to a multimodal VLM so answers can use vision as well as captions.</li> </ul> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Koome Murungi. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "About",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-projects",
+          title: "Projects",
+          description: "Spatial AI and 3D scene understanding — native representations, open-vocabulary retrieval, and language grounded on 3D evidence.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "projects-custom-3d-gaussian-splatting-cuda",
+          title: 'Custom 3D Gaussian Splatting (CUDA)',
+          description: "Bare-metal C++/CUDA differentiable 3DGS engine achieving 114 FPS @ 720p with custom tile rasterization and EWA kernels",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/cuda-3dgs/";
+            },},{id: "projects-gaussclip",
+          title: 'GaussCLIP',
+          description: "Searchable native 3D Gaussian chunks → grounded QA from a frozen LLM and retrieved caption evidence (no VLM fine-tuning).",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/gaussclip/";
+            },},{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%6B%6D%75%72%75%6E%67%69@%61%6E%64%72%65%77.%63%6D%75.%65%64%75", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/kmurungi", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/koomemurungi", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
